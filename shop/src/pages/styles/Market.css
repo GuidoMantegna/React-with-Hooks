@@ -1,0 +1,66 @@
+.market-menu {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.market-menu > h2 {
+    font-size: 1.5em;
+}
+
+.market-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 60%;
+}
+
+.total-qty-container,
+.total-price-container {
+    position: relative;
+}
+
+.total-qty-container > i,
+.total-price-container > i {
+    font-size: 1.5em;
+}
+
+.total-qty,
+.total-price {
+    position: absolute;
+    padding: 0 5px;
+    left: 50%;
+    border-radius: 10px;
+    background: chocolate;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: .75em;
+}
+
+.add-button {
+    padding: 0 2px;
+    font-weight: bold;
+}
+
+.market-search {
+    margin-top: 10px;
+    width: 95%;
+    border: 8px solid rgb(221, 183, 44);
+    border-radius: 5px;
+}
+
+.market-items-container {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+    .market-info {
+        width: 100%;
+        margin-top: 20px;
+    }
+}

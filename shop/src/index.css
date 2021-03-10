@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h2 {
+  margin: 10px 0;
+}
+
+.pages-container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  /* border: 1px solid rgb(99, 99, 99); */
+}
+
+.pages-container > h2 {
+  font-size: 1.5em;
+  color: rgb(70, 70, 70);
+}
+
+.link:hover {
+  text-decoration: none;
+}
