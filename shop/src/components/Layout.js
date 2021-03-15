@@ -19,7 +19,6 @@ function Layout ( {children} ) {
         } else {
             burguerMenu.style.transform = 'translateY(-100%)'
             burguerIcon.classList.replace('bi-x-circle', 'bi-list');    
-            
         }
 
         hidden = !hidden
@@ -35,12 +34,13 @@ function Layout ( {children} ) {
                     <div className="content">
                         <div className="sidebar">
                             <Sidebar onClick={handleClick}/>
-                        </div>
+                        </div> 
                         <div className="pages">
                             <NavMenu 
                                 onClick={handleClick} 
                                 containerClass={'burguer-menu'}
-                                linkClass={'burguer-link'}/>
+                                linkClass={'burguer-link'}
+                            />
                             {children}
                         </div>
                     </div>

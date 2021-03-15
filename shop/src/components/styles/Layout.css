@@ -1,7 +1,7 @@
 .background {
     background: lightblue;
     min-width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
 .main-container {
     background: whitesmoke;
     width: 95%;
-    min-height: 95vh;
+    height: 95vh;
     border-radius: 25px;
     padding: 5%;
     box-sizing: border-box;
@@ -35,7 +35,7 @@
 .pages {
     height: 100%;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .burguer-menu {

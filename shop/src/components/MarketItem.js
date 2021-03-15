@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import './styles/MarketItem.css';
 
-function MarketItem ( { product, price, qty, onClick } ) {
+function MarketItem ( { product, price, qty, onClick, id } ) {
 
     return (
         <Fragment>
-            <div className="market-item" onClick={onClick}>
+            <div className="market-item" onClick={onClick} data-id={id}>
                 <p className="market-product">{product}</p>
                 <span>{price}</span>
                 <p>

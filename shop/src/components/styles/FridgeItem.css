@@ -1,0 +1,61 @@
+.fridge-item-container {
+    background: white;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    display: grid;
+    grid-template-columns: 20% 60% auto;
+    /* column-gap: 5px; */
+}
+
+.food-pic {
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+.item-info {
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-info > h5 {
+    margin-bottom: 4px;
+    font-size: 1em;
+}
+
+.nutrition-info {
+    display: none;
+    font-size: .75em;
+    margin: 0;
+}
+
+.change-item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@media screen and (max-width: 425px) {
+    .item-info > h5 {
+        font-size: .8em;
+    }
+    
+} 
+
+@media screen and (min-width: 768px) {
+    .nutrition-info {
+        display: inline;
+    }
+    .food-pic {
+        height: 75px;
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+    .nutrition-info {
+        font-size: .9em;
+    }
+}
