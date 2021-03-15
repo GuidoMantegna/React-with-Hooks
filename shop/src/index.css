@@ -16,6 +16,11 @@ i {
   cursor: pointer;
 }
 
+input {
+  border: none;
+  outline: none;
+}
+
 .pages-container {
   width: 100%;
   display: flex;

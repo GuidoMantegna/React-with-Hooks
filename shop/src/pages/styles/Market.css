@@ -51,6 +51,11 @@
     border-radius: 5px;
 }
 
+#market-search-tab {
+    width: 90%;
+    padding-left: 20px;
+}
+
 .market-items-container {
     height: 80%;
     width: 100%;
