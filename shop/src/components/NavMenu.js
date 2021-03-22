@@ -10,7 +10,7 @@ function NavMenu ( { onClick, containerClass, linkClass } ) {
                 <Link to="/home" onClick={onClick} className="link">
                     <p className={linkClass}> <i className="bi bi-house-fill ico-link"></i> HOME </p>
                 </Link>
-                <Link to="/fridge" onClick={onClick} className="link">
+                <Link to="/myfridge" onClick={onClick} className="link">
                     <p className={linkClass}> <i className="bi bi-basket ico-link"></i> MY FRIDGE </p>
                 </Link>
                 <Link to="/market" onClick={onClick} className="link">

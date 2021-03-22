@@ -4,13 +4,20 @@
     border-bottom: 1px solid #ccc;
     display: grid;
     grid-template-columns: 20% 60% auto;
-    /* column-gap: 5px; */
+    position: relative;
+    z-index: 1;
+}
+
+.food-pic-container {
+    display: flex;
+    justify-content: center;
 }
 
 .food-pic {
-    height: 50px;
+    height: 35px;
     border-radius: 50%;
     margin: 5px;
+    align-self: center;
 }
 
 .item-info {
@@ -22,7 +29,7 @@
 
 .item-info > h5 {
     margin-bottom: 4px;
-    font-size: 1em;
+    font-size: .8em;
 }
 
 .nutrition-info {
@@ -37,24 +44,33 @@
     align-items: center;
 }
 
+.ice-pic {
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
 @media screen and (max-width: 425px) {
-    .item-info > h5 {
-        font-size: .8em;
-    }
     
 } 
 
 @media screen and (min-width: 768px) {
+    .item-info > h5 {
+        font-size: .9em;
+    }
     .nutrition-info {
         display: inline;
     }
     .food-pic {
-        height: 75px;
+        height: 40px;
     }
 
 }
 
 @media screen and (min-width: 1024px) {
+    .item-info > h5 {
+        font-size: 1em;
+    }
     .nutrition-info {
         font-size: .9em;
     }

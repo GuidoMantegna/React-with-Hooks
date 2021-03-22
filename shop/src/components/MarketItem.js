@@ -9,9 +9,9 @@ function MarketItem ( { product, price, qty, onClick, id } ) {
                 <p className="market-product">{product}</p>
                 <span>{price}</span>
                 <p>
-                    <i className="bi bi-plus-circle plus-item" id="plus-item"></i>
+                    <i className="bi bi-plus-circle plus-item" id="plus-item" data-action="select-qty"></i>
                     <span className="qty" id="item-qty">{qty}</span>
-                    <i className="bi bi-dash-circle less-item" id="less-item"></i>
+                    <i className="bi bi-dash-circle less-item" id="less-item" data-action="select-qty"></i>
                 </p>
                 <i className="bi bi-cart-plus add-item" data-action="add-item"></i>
             </div>
