@@ -6,9 +6,10 @@ function MarketItem ( { product, price, qty, onClick, id } ) {
     return (
         <Fragment>
             <div className="market-item" onClick={onClick} data-id={id}>
-                <p className="market-product">{product}</p>
-                <span>{price}</span>
-                <p>
+                <p className="market-product">{product}
+                    <span className="price">$ {price}</span>
+                </p>
+                <p className="item-qty">
                     <i className="bi bi-plus-circle plus-item" id="plus-item" data-action="select-qty"></i>
                     <span className="qty" id="item-qty">{qty}</span>
                     <i className="bi bi-dash-circle less-item" id="less-item" data-action="select-qty"></i>

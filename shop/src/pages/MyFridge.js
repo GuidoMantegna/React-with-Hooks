@@ -35,7 +35,7 @@ function MyFridge (props) {
         db = event.target.result;
 
         // Create an object store named cart. Object stores in databases are where data are stored.
-        let cart = db.createObjectStore('cart', {keyPath: 'id'});
+        let cart = db.createObjectStore('cart', {keyPath: 'idIngredient'});
     }
 
     // 3rd. onsuccess fires after onupgradeneeded completes and it also fires if we refresh the page and open the database again. 
@@ -125,7 +125,7 @@ function MyFridge (props) {
     }
 
     const [cart, setCart] = useState([]);
-    const [totalProducts, setTotal] = useState({});
+    const [totalProducts, setTotal] = useState({totalPrice: 0, totalQty: 0});
     const [fridge, setFridge] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
 
@@ -139,53 +139,50 @@ function MyFridge (props) {
     }
 
     function addToCart (e) {
-        let product = e.nativeEvent.path[1].childNodes[0].innerText;
-        let price = parseFloat(e.nativeEvent.path[1].childNodes[1].innerText);
-        let qty = parseInt(e.nativeEvent.path[1].childNodes[2].innerText);  
+        let product = e.nativeEvent.path[1].childNodes[0].childNodes[0].data;
+        let price = parseFloat(e.nativeEvent.path[1].childNodes[0].childNodes[1].lastChild.data);
+        let qty = parseInt(e.nativeEvent.path[1].childNodes[1].childNodes[1].innerText);  
         let id = e.nativeEvent.path[1].dataset.id;
-
-        let productExist = cart.some(item => item.product === product);  
-        let qtyModified = cart.some(item => item.qty !== qty);  
-    
-            if (!productExist && qty > 0) {
-                setCart([    
-                    ...cart,
-                    {product: product,
-                    price: price,
-                    qty: qty,
-                    totalSum: price * qty,
-                    id: id}                    
-                    ]);    
-            };
-            if (productExist && qtyModified) {
-                
-                let productIndex = cart.findIndex(item => item.product === product);
-                cart[productIndex].qty = qty;
-                cart[productIndex].totalSum = cart[productIndex].price * qty;
-
-            };
-
-    };
-
-    function addItems () {
-        if (cart.length > 0) {
-            const totalQty = cart.map(product => product.qty);
-            const totalPrice = cart.map(product => product.totalSum);
-            setTotal({
-                qty: totalQty.reduce((acc, currentValue) => acc + currentValue),
-                price: totalPrice.reduce((acc, currentValue) => acc + currentValue).toFixed(2)
-            }) 
-        };
         
-    };
+        let productIndex = cart.findIndex(item => item.product === product);
+        
+        let productExist = cart.some(item => item.product === product);  
+        let qtyModified = cart.some(item => item.qty !== qty);          
+    
+        if (!productExist && qty > 0) {
+            setCart([    
+                ...cart,
+                {product: product,
+                price: price,
+                qty: qty,
+                totalSum: price * qty,
+                id: id}                    
+                ]);
+            setTotal({
+                totalQty: totalProducts.totalQty + qty,
+                totalPrice: totalProducts.totalPrice + qty*price,  
+                });                                 
+        };
 
+        if (productExist && qtyModified) {
+            let previousQty = cart[productIndex].qty;
+            let difference = qty - previousQty;
+            cart[productIndex].qty = qty;
+            cart[productIndex].totalSum = cart[productIndex].price * qty;
+
+            setTotal({
+                totalQty: totalProducts.totalQty + difference,
+                totalPrice: totalProducts.totalPrice + difference*price,  
+                });
+        };
+    };
+    
     function search () {
         const searchTab = document.getElementById('market-search-tab');
         let search = searchTab.value.toLowerCase();
         setFilteredData(allProducts.filter(item => item.strIngredient.toLowerCase().includes(search)));
-        searchTab.placeholder = `You have ${filteredData.length} products to choice`
-        searchTab.value = '';
-    }
+        searchTab.value = '';        
+    }; 
 
     function handleMarketClicks (e) {
 
@@ -197,27 +194,35 @@ function MyFridge (props) {
         // ADD TO CART
         if (action === 'add-item') {
             addToCart(e)
-            addItems()
 
-            let product = e.nativeEvent.path[1].childNodes[0].innerText;
-            let price = parseFloat(e.nativeEvent.path[1].childNodes[1].innerText);
-            let qty = parseInt(e.nativeEvent.path[1].childNodes[2].innerText);  
+            let product = e.nativeEvent.path[1].childNodes[0].childNodes[0].data;
+            let price = parseFloat(e.nativeEvent.path[1].childNodes[0].childNodes[1].lastChild.data);
+            let qty = parseInt(e.nativeEvent.path[1].childNodes[1].childNodes[1].innerText);  
             let id = e.nativeEvent.path[1].dataset.id;
             
-            const data = {product: product,
+
+            const data = {strIngredient: product,
                 price: price,
                 qty: qty,
                 totalSum: price * qty,
-                id: id};
+                idIngredient: id};
             
-            updateData(data)
+            if(data.qty > 0) {
+
+                updateData(data)
+            }
+
+            
+            console.log(price)
         }
         // ADD TO FRIDGE
         if (action === 'add-to-fridge') {
             setFridge(allProductsInDB);
-            setTotal({})
-            // setFilteredData([])
-            // setCart([])
+            setTotal({totalPrice: 0, totalQty: 0})
+            setCart([])
+            setFilteredData([])
+
+            
         }
         // PRODUCTS SEARCH
         if (action === 'search') {
@@ -232,18 +237,18 @@ function MyFridge (props) {
         // DELETE FRIDGE ITEM
         if(action === 'delete') {
             setFridge(
-                fridge.filter(item => item.id !== selectedId)
+                fridge.filter(item => item.idIngredient !== selectedId)
                 );
-            setCart(
-                cart.filter(item => item.id !== selectedId)
-                );
+        //     setCart(
+        //         cart.filter(item => item.id !== selectedId)
+        //         );
             deleteData(selectedId)
         };
 
         // EDIT FRIDGE ITEM
         if(action === 'edit') {
             setFilteredData(
-                filteredData.filter(item => item.idIngredient == selectedId)
+                allProductsInDB.filter(item => item.idIngredient == selectedId)
                 )
         };        
 
@@ -273,8 +278,7 @@ function MyFridge (props) {
     };
 
     useEffect (() => {
-
-        console.log({cart: cart, fridge: fridge})
+        console.log({cart: cart, totalProducts: totalProducts})
     })
 
     return (
@@ -282,8 +286,8 @@ function MyFridge (props) {
             <Fridge fridge={fridge} onClick={handleFridgeClicks}/>
 
             <Market
-               totalProductsQty={totalProducts.qty} 
-               totalProductsPrice={totalProducts.price} 
+               totalProductsQty={totalProducts.totalQty} 
+               totalProductsPrice={totalProducts.totalPrice} 
                filteredData={filteredData}
                onClick={handleMarketClicks}
             />

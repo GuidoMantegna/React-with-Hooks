@@ -1,11 +1,14 @@
 import { Fragment } from 'react';
 import FridgeItem from '../components/FridgeItem';
+import './styles/FridgeContain.css'
 
 function FridgeContain ( {fridge, onClick} ) {
     if(fridge.length === 0) {
         return (
             <Fragment>
-                <h1>Your fridge is empty</h1>
+                <div className="empty-fridge">
+                    <h2>Your fridge is empty :(</h2>
+                </div>
             </Fragment>
         )
     } else {
@@ -15,9 +18,9 @@ function FridgeContain ( {fridge, onClick} ) {
                     {fridge.map(item => {
                         return (
                         <FridgeItem 
-                            key={item.id} 
-                            id={item.id} 
-                            item={item.product}
+                            key={item.idIngredient} 
+                            id={item.idIngredient} 
+                            item={item.strIngredient}
                             qty={item.qty}
                             onClick={onClick}/>)
                         })
