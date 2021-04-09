@@ -6,6 +6,8 @@ function FridgeContain ( {fridge, onClick} ) {
     if(fridge.length === 0) {
         return (
             <Fragment>
+                
+
                 <div className="empty-fridge">
                     <h2>Your fridge is empty :(</h2>
                 </div>

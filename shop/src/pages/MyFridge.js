@@ -277,13 +277,15 @@ function MyFridge (props) {
 
     };
 
+
+
     useEffect (() => {
         console.log({cart: cart, totalProducts: totalProducts})
     })
 
     return (
         <Fragment>
-            <Fridge fridge={fridge} onClick={handleFridgeClicks}/>
+            {/* <Fridge fridge={fridge} onClick={handleFridgeClicks}/> */}
 
             <Market
                totalProductsQty={totalProducts.totalQty} 

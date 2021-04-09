@@ -12,58 +12,111 @@
     width: 95%;
     height: 95vh;
     border-radius: 25px;
-    padding: 5%;
+    padding: 10px;
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 1fr 8fr;
+    grid-row-gap: 25px;
 }
 
 .header {
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .content {
     width: 100%;
-    margin-top: 30px;
-    display: grid;
+    height: 100%;
+    overflow: hidden;
 }
 
 .sidebar {
-    height: 100%;
+    height: 80%;
 }
 
 .pages {
     height: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-header,    
+.page-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-header {
+    justify-content: flex-end
+}
+
+.page-content {
+    height: 100%;
+    overflow-y: scroll;
     overflow-x: hidden;
+    position: relative;
 }
 
-.burguer-menu {
-    position: absolute;
-    left: 0;
-    right: 0;
-    z-index: 3;
-    transform: translateY(-100%);
-    background: rgba(40, 40, 40, 0.95);
+.page-title-container {
+    /* background-image: url('/src/images/side-background.png');
+    background-size: cover; */
+    width: 95%;
+    background: rgba(188, 143, 143, .1);
+    margin-bottom: 20px;
     padding: 10px;
-    color: white;
-    transition: all .5s;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.burguer-link {
-    color: white;
-    font-size: .75em;
-    margin-left: 10px;
+.page-title {
+    font-size: 1.5em;
+    color: rgb(85, 85, 85);
+    font-weight: bold;
+    /* text-shadow: 0px 0px 5px rgb(255, 255, 255); */
+    align-self: flex-start;
+    margin: 0;
 }
 
-@media screen and (max-width: 767px) {
-    .content {
-        grid-template-rows: auto 80%;
+.small-title-container {
+    display: none;
+}
+
+.small-title {
+    color: rgb(85, 85, 85);
+    font-weight: bold;
+}
+
+@media screen and (min-width: 426px) {
+    .page-title {
+        font-size: 1.75em;
     }
 }
 
 @media screen and (min-width: 768px) {
     .content {
+        display: grid;
         grid-template-columns: 20% 80%;
     }
+    .pages {
+        height: 78vh;
+    }
+    .page-title-container {
+        display: none;
+    }
+    .small-title-container {
+        display: block;
+    }
+    /* .pages {
+        height: 95%;
+        position: relative;
+        display: grid;
+        grid-template-rows: 100px 60vh;
+    } */
 }

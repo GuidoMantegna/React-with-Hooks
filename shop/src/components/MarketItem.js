@@ -14,7 +14,7 @@ function MarketItem ( { product, price, qty, onClick, id } ) {
                     <span className="qty" id="item-qty">{qty}</span>
                     <i className="bi bi-dash-circle less-item" id="less-item" data-action="select-qty"></i>
                 </p>
-                <i className="bi bi-cart-plus add-item" data-action="add-item"></i>
+                <a href="#market-title"><i className="bi bi-cart-plus add-item" data-action="add-item"></i></a>
             </div>
         </Fragment>
     )

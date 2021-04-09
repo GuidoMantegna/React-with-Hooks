@@ -1,0 +1,128 @@
+.tips-header-container {
+    width: 100%;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.tips-search-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tips-search {
+    background: white;
+    width: 95%;
+    box-shadow: 3px 3px rgb(120, 120, 120);
+    border-radius: 3px;
+}
+
+#dropdown-btn {
+    width: 90%;
+    padding: 6px 0;
+    font-size: .8em;
+}
+
+.tips-content {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.tips-search-results {
+    width: 70%;
+    list-style: none;
+    padding: 5px 0;
+    background: rgba(50, 50, 50, .9);
+    color: white;
+    border-radius: 3px;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    display: none;
+}
+
+.tips-item {
+    font-size: 1em;
+    transition: letter-spacing .5s;
+}
+
+.tips-item:hover {
+    cursor: pointer;
+    background: rgb(255, 237, 71);
+    color: rgb(50, 50, 50);
+    letter-spacing: 2px;
+}
+
+.bi-cup-straw {
+    margin: 0 5px;
+}
+
+.tip-card {
+    margin-top: 20px;
+    width: 80%;
+    overflow-y: scroll;
+
+}
+
+.tip-card-body {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80%;
+    background-image: url('/src/images/card-background.jpg');
+    background-size: cover;
+}
+
+.tip-card-text {
+    background: rgba(255, 255, 255, 0.5);
+    color: rgb(50, 50, 50);
+    padding: 3px;
+    border-radius: 3px;
+}
+
+@media screen and (min-width: 425px) {
+    .tips-search {
+        width: 85%;
+    }
+    #dropdown-btn {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .tips-search {
+        width: 75%;
+    }
+    #dropdown-btn {
+        width: 70%;
+    }
+    .tips-search-results {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .tips-header-container {
+        display: block;
+    }
+    .tip-card-body {
+        min-height: 250px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .tips-search {
+        width: 65%;
+    }
+    #dropdown-btn {
+        width: 60%;
+    }
+    .tips-search-results {
+        width: 50%;
+    }
+}

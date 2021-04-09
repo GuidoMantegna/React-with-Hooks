@@ -1,4 +1,4 @@
-.fridge-main-container {
+/* .fridge-main-container {
     width: 100%;
     min-height: 75%;
     display: flex;
@@ -7,13 +7,17 @@
     padding: 10px;
     box-sizing: border-box;
     margin-bottom: 20px;
-  }
+  } */
+
+.fridge-header-container {
+    width: 100%;
+    margin-bottom: 10px;
+}
 
 .fridge-menu {
-    width: 65%;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
     cursor: pointer;
 }
 
@@ -22,8 +26,10 @@
 }
 
 .fridge-link {
+    color: #212529;
     display: flex;
     align-items: center;
+    /* justify-content: center; */
     overflow: hidden;
     width: 1.5em;
     transition: all .5s;
@@ -31,6 +37,7 @@
 
 .fridge-link:hover {
     width: 5em;
+    color: #212529;
 }
 
 #fridge-link-desc {
@@ -38,22 +45,22 @@
     padding-left: 3px;
 }
 
-.fridge {
-    overflow: hidden;
+.fridge-content {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
     position: relative;
-    width: 90%;
-    min-height: 200px;
 }
 
 .fridge-door {
     background: linear-gradient(to right, rgb(235, 235, 235), rgb(245, 245, 245) 50%, rgb(235, 235, 235));
-    box-shadow: 2px 2px 5px rgb(225, 225, 225);
+    box-shadow: 6px -3px 5px rgb(215, 215, 215);
     border-radius: 10px;
     position: absolute;
-    top: 0;
-    bottom: 2px;
-    left: 0;
-    right: 2px;
+    top: 5px;
+    width: 80%;
+    bottom: 0;
     z-index: 2;
     cursor: grab;
     transition: all 2s;
@@ -102,22 +109,38 @@
 
 .fridge-list {
     padding: 0;
+    margin: 5px;
+    /* height: fit-content; */
+    width: 75%;
     display: flex;
     flex-direction: column;
     box-shadow: 2px 2px 2px #ccc;
     border-radius: 10px;
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 @media screen and (min-width: 426px) {
-    .fridge {
-        width: 75%;
-    }
+    
     
 } 
+@media screen and (min-width: 576px) {
+    
+    
+}
+@media screen and (min-width: 768px) {
+    .fridge-header-container {
+        display: grid;
+        grid-template-columns: 180px auto;
+    }
+    .fridge-content {
+        height: 83%;
+    }
+    
+}
 
 @media screen and (min-width: 1025px) {
-    .fridge {
-        width: 65%;
-    }
+    
     
 } 

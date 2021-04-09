@@ -50,6 +50,32 @@
     z-index: -1;
 }
 
+.edit-panel {
+    color: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(80, 80, 80, .95);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transform: translateX(120%);
+    transition: all .5s;
+}
+
+.edit-panel > p,
+.edit-panel > h5 {
+    margin: 0; 
+    font-size: 1em;
+}
+
+#add-new-qty {
+    display: none;
+}
+
 @media screen and (max-width: 425px) {
     
 } 

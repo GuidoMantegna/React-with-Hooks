@@ -30,11 +30,6 @@ input {
   box-sizing: border-box;
 }
 
-.pages-container > h2 {
-  font-size: 1.5em;
-  color: rgb(70, 70, 70);
-}
-
 .link:hover {
   text-decoration: none;
 }

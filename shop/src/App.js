@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Layout from './components/Layout'
 import './App.css';
 import Home from './pages/Home'
-import MyFridge from './pages/MyFridge';
+import Fridge from './pages/Fridge';
 import Market from './pages/Market';
 import Tips from './pages/Tips';
 import Contact from './pages/Contact';
@@ -14,8 +14,9 @@ function App() {
     <BrowserRouter>
       <Layout>
           <Switch>
+              <Route exact path="/" component={Home}/>
               <Route exact path="/home" component={Home}/>
-              <Route exact path="/myfridge" component={MyFridge}/>
+              <Route exact path="/fridge" component={Fridge}/>
               <Route exact path="/market" component={Market}/>
               <Route exact path="/tips" component={Tips}/>
               <Route exact path="/contact" component={Contact}/>

@@ -73,6 +73,9 @@
 }
 
 @media screen and (min-width: 425px) {
+    .market-item {
+        width: 85%;
+    }
     .market-product {
         font-size: .9em;
     }
@@ -81,10 +84,7 @@
     }
 }
 
-@media screen and (min-width: 475px) {
-    .market-search {
-        width: 85%;
-    }
+@media screen and (min-width: 576px) {
     .market-item {
         width: 75%;
     }
@@ -92,9 +92,6 @@
 }
 
 @media screen and (min-width: 768px) {
-    .market-search {
-        width: 75%;
-    }
     .market-item {
         width: 65%;
     }
