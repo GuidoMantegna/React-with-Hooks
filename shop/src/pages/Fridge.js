@@ -184,10 +184,6 @@ function Fridge () {
         setFridge(allProductsInDB)
     }
 
-    useEffect(() => {
-
-    })
-
     return (
         <Fragment>
         
