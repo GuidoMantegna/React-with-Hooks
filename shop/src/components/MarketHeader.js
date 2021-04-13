@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 
 function MarketHeader ({ totalProductsPrice, totalProductsQty, onClick, filteredData }) {
 
@@ -18,8 +17,8 @@ function MarketHeader ({ totalProductsPrice, totalProductsQty, onClick, filtered
                 <div className="small-title-container">
                     <h2 className="small-title"><i className="bi bi-shop ico-link"></i>- Market</h2>
                 </div>
-                <div className="market-menu-container" id="market">
 
+                <div className="market-menu-container" id="market">
                         <div className="total-qty-container">
                             <i className="bi bi-cart4"></i>
                             <span className="total-qty">{totalProductsQty}</span>
@@ -28,10 +27,7 @@ function MarketHeader ({ totalProductsPrice, totalProductsQty, onClick, filtered
                             <i className="bi bi-cash"></i>
                             <span className="total-price">${totalProductsPrice}</span>
                         </div>
-                        <Link to="/fridge">
-                            <button className="add-button btn btn-danger" data-action="add-to-fridge" onClick={onClick}>ADD</button>
-                        </Link>
-        
+                        <button className="add-button btn btn-danger" data-action="add-to-fridge" onClick={onClick}>ADD</button>
                 </div>
             </div>
             

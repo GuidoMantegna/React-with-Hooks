@@ -4,7 +4,7 @@ import './styles/Tips.css';
 import TipItem from '../components/TipItem'
 import TipCard from '../components/TipCard'
 
-function Tips (props) {
+function Tips () {
 
     let allProducts = [];
 
@@ -23,7 +23,7 @@ function Tips (props) {
     const [filteredData, setFilteredData] = useState([]);
     const [cardInfo, setCardInfo] = useState({product:'', info:''});
 
-    function search () {
+    const search = () => {
         const searchTab = document.getElementById('market-search-tab');
         let search = searchTab.value.toLowerCase();
 
@@ -33,13 +33,12 @@ function Tips (props) {
             setFilteredData(allProducts.filter(item => item.strIngredient.toLowerCase().includes(search)));
             searchTab.placeholder = "Search for your products";
             searchTab.value = '';  
-        }
-              
+        }         
     }; 
 
     function handleTipsClicks (e) {
         const action = e.target.dataset.action;
-        let searchResults = document.querySelector('.tips-search-results');
+        const searchResults = document.querySelector('.tips-search-results');
 
         if (action === 'search') {
             search()
@@ -53,7 +52,6 @@ function Tips (props) {
             } else {
                 searchResults.style.display = 'none'; 
             };
-
         };
 
         if (action === 'print-info') {
@@ -66,12 +64,9 @@ function Tips (props) {
                 info             
             })
 
-            
-            searchResults.style.display = 'none';
-            
+            searchResults.style.display = 'none';            
         };
-
-    }
+    };
 
     useEffect(() => {
         const dropdownBtn = document.getElementById('dropdown-btn');
@@ -83,58 +78,53 @@ function Tips (props) {
         } else {
             dropdownBtn.innerText = `Search tips of your favourite food ↑`
         }
-
-    })
+    });
 
     return (
         <Fragment>
-                <div className="page-title-container">
+            <div className="page-title-container">
+                <h2 className="page-title"><i className="bi bi-journal-bookmark ico-link"></i>- Tips</h2>
+            </div>
+
+            <div className="tips-header-container">
+                <div className="small-title-container">
                     <h2 className="page-title"><i className="bi bi-journal-bookmark ico-link"></i>- Tips</h2>
                 </div>
-                {/* <h2 className="page-title"><i className="bi bi-journal-bookmark ico-link"></i>- Tips</h2> */}
-                <div className="tips-header-container">
-                    <div className="small-title-container">
-                        <h2 className="page-title"><i className="bi bi-journal-bookmark ico-link"></i>- Tips</h2>
-                    </div>
+            </div>
+
+            <div className="tips-search-container">
+                <div className="tips-search">
+                    <input type="text" placeholder="Search for your products" id="market-search-tab"/>
+                    <i className="bi bi-search" data-action="search" onClick={handleTipsClicks}></i>
                 </div>
+                <button 
+                    type="button" 
+                    className="btn btn-danger" 
+                    id="dropdown-btn" 
+                    data-action="show-products" 
+                    onClick={handleTipsClicks}>
+                </button>
+            </div>          
 
-                <div className="tips-search-container">
-                    <div className="tips-search">
-                        <input type="text" placeholder="Search for your products" id="market-search-tab"/>
-                        <i className="bi bi-search" data-action="search" onClick={handleTipsClicks}></i>
-                    </div>
-                    <button 
-                        type="button" 
-                        className="btn btn-danger" 
-                        id="dropdown-btn" 
-                        data-action="show-products" 
-                        onClick={handleTipsClicks}>
-                    </button>
-                    
-                </div>
+            <div className="tips-content">
+                <ul className="tips-search-results">
+                    {filteredData.map(item => {
+                        return(
+                            <TipItem
+                                key={item.idIngredient} 
+                                id={item.idIngredient} 
+                                product={item.strIngredient}
+                                info={item.strDescription}
+                                onClick={handleTipsClicks}
+                            />)
+                    })}                
+                </ul>
 
-                
-
-                <div className="tips-content">
-                    <ul className="tips-search-results">
-                        {filteredData.map(item => {
-                            return(
-                                <TipItem
-                                    key={item.idIngredient} 
-                                    id={item.idIngredient} 
-                                    product={item.strIngredient}
-                                    info={item.strDescription}
-                                    onClick={handleTipsClicks}
-                                />)
-                        })}                
-                    </ul>
-
-                    <TipCard 
-                        onClick={handleTipsClicks}
-                        product={cardInfo.product || 'Find amazing tips!'} 
-                        info={cardInfo.info || 'Look into over 100 items and fill your fridge'}/>
-
-                </div> 
+                <TipCard 
+                    onClick={handleTipsClicks}
+                    product={cardInfo.product || 'Find amazing tips!'} 
+                    info={cardInfo.info || 'Look into over 100 items and fill your fridge'}/>
+            </div> 
             
         </Fragment>
         

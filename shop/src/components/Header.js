@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import './styles/Header.css';
 import Logo from '../images/avocado.png'
 
-function Header (props) {
+function Header () {
     return (
         <Fragment>
             <div className="header-container">
@@ -13,10 +13,8 @@ function Header (props) {
                 <div className="title-container">
                     <h1 className="header-title">Welcome to the biggest food<br/>market in the net.</h1>
                 </div>
-                {/* <div className="cart"></div> */}
             </div>
-        </Fragment>
-        
+        </Fragment>  
     )
 };
 

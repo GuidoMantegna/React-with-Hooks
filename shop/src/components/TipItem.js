@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import './styles/TipItem.css'
 
 function TipItem ( {product, id, info, onClick} ) {
     return (

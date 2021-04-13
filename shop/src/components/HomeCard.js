@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom'
 
-
 function HomeCard ({ cardTitle, cardText, backgroundColor, cardBack, linkTo }) {
 
     const cardImg = {backgroundImage: `url(${cardBack})`,}

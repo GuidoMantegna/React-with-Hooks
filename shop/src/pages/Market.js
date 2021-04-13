@@ -5,7 +5,7 @@ import MarketItem from '../components/MarketItem';
 import MarketHeader from '../components/MarketHeader';
 
 
-function Market () {
+function Market ({ history }) {
 
     let allProducts = [];
 
@@ -46,23 +46,8 @@ function Market () {
         console.error('error opening database ' + event.target.errorCode);
     };
 
-    // ADD MARKET ITEM TO THE DB
-    function addItemToDB(data) {
-        let transaction = db.transaction(['cart'], 'readwrite');
-        let objectStore = transaction.objectStore('cart');
-
-        for (let index = 0; index < data.length; index++) {
-            objectStore.add(data[index]);
-        };
-        
-        transaction.oncomplete = function() { getAndDisplayItems(db) }
-        transaction.onerror = function(event) {
-            alert('error storing data ' + event.target.errorCode);
-        }
-    }
-
     // READ THE DB
-    function getAndDisplayItems(db) {
+    const getAndDisplayItems = (db) => {
         let transaction = db.transaction(['cart'], 'readonly');
         let objectStore = transaction.objectStore('cart');
         let request = objectStore.openCursor();
@@ -91,45 +76,34 @@ function Market () {
         request.onerror = (error) => {
             console.error(error)
         };     
-    }
-
-    // DELETE DATA FROM THE DB
-    const deleteData = (key) => {
-        const transaction = db.transaction(['cart'], 'readwrite')
-        const objectStore = transaction.objectStore('cart') 
-        const request = objectStore.delete(key)
-    
-        request.onsuccess = () => {          
-            getAndDisplayItems(db)            
-        }; 
-    }
+    };
 
     const [cart, setCart] = useState([]);
     const [totalProducts, setTotal] = useState({totalPrice: 0, totalQty: 0});
     const [filteredData, setFilteredData] = useState([]);
 
-    function selectQty (e) {
+    const selectQty = e => {
         if (e.target.id === 'plus-item') {
-            e.target.nextSibling.innerText++;
+            e.target.previousSibling.innerText++;
         }
-        if (e.target.id === 'less-item' && e.target.previousSibling.innerText > 0) {
-            e.target.previousSibling.innerText--;
+        if (e.target.id === 'less-item' && e.target.nextSibling.innerText > 0) {
+            e.target.nextSibling.innerText--;
         }
-    }
+    };
 
-    function addToCart (product, price, qty, id) {
-        let productIndex = cart.findIndex(item => item.product === product);
-        let productExist = cart.some(item => item.product === product);  
+    const addToCart = ({strIngredient, price, qty, idIngredient}) => {
+        let productIndex = cart.findIndex(item => item.product === strIngredient);
+        let productExist = cart.some(item => item.product === strIngredient);  
         let qtyModified = cart.some(item => item.qty !== qty);          
     
         if (!productExist && qty > 0) {
             setCart([    
                 ...cart,
-                {product: product,
+                {product: strIngredient,
                 price: price,
                 qty: qty,
                 totalSum: price * qty,
-                id: id}                    
+                id: idIngredient}                    
                 ]);
             setTotal({
                 totalQty: totalProducts.totalQty + qty,
@@ -150,7 +124,7 @@ function Market () {
         };
     };
     
-    function search () {
+    const search = () => {
         const searchTab = document.getElementById('market-search-tab');
         let search = searchTab.value.toLowerCase();  
         
@@ -164,46 +138,49 @@ function Market () {
     }; 
 
     // ALL MARKET CLICKS HANDLERS
-    function handleMarketClicks (e) {
+    const handleMarketClicks = e => {
         const action = e.target.dataset.action;
 
         // SELECT QTY
         if (action === 'select-qty') {
             selectQty(e)
-        }
+        };
+
         // ADD TO CART AND TO DB
         if (action === 'add-item') {
-            const product = e.nativeEvent.path[2].childNodes[0].firstChild.data;
-            const price = parseFloat(e.nativeEvent.path[2].childNodes[0].firstElementChild.childNodes[1].data);
-            const qty = parseInt(e.nativeEvent.path[2].childNodes[1].childNodes[1].innerText);  
-            const id = parseInt(e.nativeEvent.path[2].dataset.id);
-
-            addToCart(product, price, qty, id);
-
-            const data = {strIngredient: product,
+            const product = e.target.offsetParent.firstChild.childNodes[0].textContent,
+            price = parseFloat(e.target.offsetParent.firstChild.lastElementChild.childNodes[1].data),
+            qty = parseInt(e.target.offsetParent.childNodes[1].childNodes[1].innerText),  
+            id = parseInt(e.target.offsetParent.dataset.id),
+            data = {
+                strIngredient: product,
                 price: price,
                 qty: qty,
-                totalSum: price * qty,
-                idIngredient: id};
-            
+                idIngredient: id };
+                
+            addToCart(data);
+
             if(data.qty > 0) {
                 updateData(data)
             };
-
         };
 
         // ADD TO FRIDGE
         if (action === 'add-to-fridge') {
-            setTotal({totalPrice: 0, totalQty: 0})
-            setCart([])
-            setFilteredData([])            
+
+            if(totalProducts.totalQty > 0) {
+                setTotal({totalPrice: 0, totalQty: 0})
+                setCart([])
+                setFilteredData([]) 
+                history.push('/fridge'); 
+            }                     
         };
 
         // PRODUCTS SEARCH
         if (action === 'search') {
             search()
         };
-    }
+    };
 
     useEffect(() => {
         const addButton = document.querySelector('.add-button');
@@ -214,69 +191,55 @@ function Market () {
             addButton.classList.remove('btn-success')
             addButton.classList.add('btn-danger')
         }
-    })
-
-    
-    
+    });    
 
     if (filteredData.length === 0) {
         return (
             <Fragment>
-                {/* <div className="page-header"> */}
                 <div className="page-title-container">
                     <h2 className="page-title"><i className="bi bi-shop ico-link"></i>- Market</h2>
                 </div>
-                    <MarketHeader
-                        totalProductsPrice={""}
-                        totalProductsQty={""}
-                        filteredData={filteredData}
-                        onClick={handleMarketClicks}
-                    />
-                {/* </div> */}
-                
-                {/* <div className="page-content"> */}
-                    <div className="empty-market-back">
 
-                    </div>
-                {/* </div> */}
-                
+                <MarketHeader
+                    totalProductsPrice={""}
+                    totalProductsQty={""}
+                    filteredData={filteredData}
+                    onClick={handleMarketClicks}
+                />
+            
+                <div className="empty-market-back"></div>
             </Fragment>
         )
     } else {
         return (
             <Fragment>
-                {/* <div className="page-header"> */}
                 <div className="page-title-container">
                     <h2 className="page-title"><i className="bi bi-shop ico-link"></i>- Market</h2>
                 </div>
-                    <MarketHeader
-                        totalProductsPrice={totalProducts.totalPrice.toFixed(2)}
-                        totalProductsQty={totalProducts.totalQty}
-                        filteredData={filteredData}
-                        onClick={handleMarketClicks}
-                    />
-                {/* </div> */}
 
-                {/* <div className="page-content"> */}
-                    <div className="search-results">
-                        {filteredData.map(item => {
-                                return(
-                                    <MarketItem 
-                                        key={item.idIngredient} 
-                                        id={item.idIngredient}
-                                        product={item.strIngredient} 
-                                        qty={item.qty || 0} 
-                                        price={item.price} 
-                                        onClick={handleMarketClicks}/>
-                                )
-                            })} 
-                    </div>
-                {/* </div> */}
-                
-            </Fragment>
-            
+                <MarketHeader
+                    totalProductsPrice={totalProducts.totalPrice.toFixed(2)}
+                    totalProductsQty={totalProducts.totalQty}
+                    filteredData={filteredData}
+                    onClick={handleMarketClicks}
+                />
+
+                <div className="search-results">
+                    {filteredData.map(item => {
+                            return(
+                                <MarketItem 
+                                    key={item.idIngredient} 
+                                    id={item.idIngredient}
+                                    product={item.strIngredient} 
+                                    qty={item.qty || 0} 
+                                    price={item.price} 
+                                    onClick={handleMarketClicks}/>
+                            )
+                        })} 
+                </div>                
+            </Fragment>  
         )
-    }
+    };
 
 };
 

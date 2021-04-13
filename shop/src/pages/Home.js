@@ -5,26 +5,21 @@ import FridgeBack from '../images/fridge-background.jpg';
 import MarketBack from '../images/market-background.jpg';
 import TipsBack from '../images/tips-background.jpg';
 import ContactBack from '../images/contact-background.jpg';
-import Logo from '../images/avocado.png'
 
-function Home (props) {
+function Home () {
     return (
         <Fragment>
-            {/* <div className="page-header">
-
+            <div className="page-title-container">
+                <h2 className="page-title"><i className="bi bi-house-fill ico-link"></i>- Home</h2>
             </div>
-            <div className="page-content"> */}
-                <div className="page-title-container">
-                    <h2 className="page-title"><i className="bi bi-house-fill ico-link"></i>- Home</h2>
-                </div>
 
-                <div className="home-header-container">
-                    <div className="small-title-container">
-                        <h2 className="page-title"><i className="bi bi-envelope ico-link"></i>- Home</h2>
-                    </div>
+            <div className="home-header-container">
+                <div className="small-title-container">
+                    <h2 className="page-title"><i className="bi bi-envelope ico-link"></i>- Home</h2>
                 </div>
-                <div className="home-main-container">
+            </div>
 
+            <div className="home-main-container">
                 <HomeCard 
                     cardTitle='Look into your fridge'
                     cardText='Check your fridge before the market get closed.'
@@ -38,7 +33,7 @@ function Home (props) {
                     backgroundColor="rgba(30, 210, 105, 0.75)"
                     cardBack={MarketBack}
                     linkTo="/market"
-                />
+                    />
                 <HomeCard 
                     cardTitle='Get best tips'
                     cardText='Learn about more interesting food facts'
@@ -53,12 +48,9 @@ function Home (props) {
                     cardBack={ContactBack}
                     linkTo="/contact"
                     />
-
-                </div>
-            {/* </div> */}
-        </Fragment>
-        
-    )
+            </div>
+        </Fragment>   
+    );
 };
 
 export default Home;

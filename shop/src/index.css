@@ -21,15 +21,6 @@ input {
   outline: none;
 }
 
-.pages-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
 .link:hover {
   text-decoration: none;
 }

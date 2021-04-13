@@ -51,8 +51,7 @@ function Fridge () {
     // UPDATE DATA FROM THE DB
     const updateData = (data) => {
         const transaction = db.transaction(['cart'], 'readwrite');
-        const objectStore = transaction.objectStore('cart');
-    /*.put() si el dato existe lo actualiza y si no lo añade*/     
+        const objectStore = transaction.objectStore('cart');  
         const request = objectStore.put(data)
     
         request.onsuccess = () => {    
@@ -71,20 +70,23 @@ function Fridge () {
         }; 
     };
 
-    function selectQty (e) {
+    const selectQty = e => {
         if (e.target.id === 'plus-item') {
-            e.target.nextSibling.innerText++;
+            e.target.previousSibling.innerText++;
         }
-        if (e.target.id === 'less-item' && e.target.previousSibling.innerText > 0) {
-            e.target.previousSibling.innerText--;
+        if (e.target.id === 'less-item' && e.target.nextSibling.innerText > 0) {
+            e.target.nextSibling.innerText--;
         }
     }
 
     // ALL FRIDGE CLICKS HANDLERS
-    function handleFridgeClicks (e) {
-        const action = e.target.dataset.action;
-        let selectedId = parseInt(e.nativeEvent.path[2].dataset.id);
-        let editPanel = document.querySelectorAll('.edit-panel');
+    const handleFridgeClicks = (e) => {
+        const fridgeItems = Array.from(document.querySelectorAll('.fridge-item-container')),
+        editPanels = Array.from(document.querySelectorAll('.edit-panel')),
+        action = e.target.dataset.action,
+        selectedId = parseInt(e.target.offsetParent.dataset.id),
+        addNewQtyBtn = e.target.offsetParent.childNodes[2],
+        closePanelBtn = e.target.offsetParent.lastChild;
 
         // DELETE FRIDGE ITEM
         if(action === 'delete') {
@@ -93,75 +95,44 @@ function Fridge () {
                 );
 
             deleteData(selectedId)
-
         };
 
         // EDIT FRIDGE ITEM
-        let startQty;
-
         if(action === 'edit') {
 
-            editPanel.forEach(panel => {
+            editPanels.forEach(panel => {
                 if(panel.dataset.id == selectedId) {
                     panel.style.transform = "translateX(0)"
                 }
             });
-
         }; 
         
         // SELECT QTY
         if (action === 'select-qty') {
-            selectQty(e)
+            selectQty(e);
 
-            let currentQty = parseInt(e.nativeEvent.path[1].childNodes[1].innerText);
-            let startQty = parseInt(e.nativeEvent.path[3].childNodes[1].childNodes[0].lastChild.innerText);
+            const selectedItem = fridgeItems.filter(item => item.dataset.id == selectedId);
+            const startQty = parseInt(selectedItem[0].childNodes[1].childNodes[0].childNodes[2].innerText);
+            const currentQty = parseInt(e.target.offsetParent.childNodes[1].childNodes[1].innerText);
             
-            editPanel.forEach(() => {
-                const addNewQtyBtn = e.nativeEvent.path[2].childNodes[2];
-                const closePanelBtn = e.nativeEvent.path[2].childNodes[3];
-
+            editPanels.forEach(() => {
                 if(currentQty !== startQty) {
                     addNewQtyBtn.style.display = 'block';
                     closePanelBtn.style.display = 'none';
-    
                 } else {
                     addNewQtyBtn.style.display = 'none';
                     closePanelBtn.style.display = 'block';
                 }
-
             });
         }
-
-        // OPEN FRIDGE DOOR
-        if(action === 'open-fridge') {
-            const fridgeDoor = document.querySelector('.fridge-door');
-            const linkIcon = document.querySelector('.fridge-link > i');
-            const linkDesc = document.querySelector('.fridge-link > p');
-            const doorStatus = linkIcon.classList[1];
-
-            if(doorStatus === "bi-door-open") {
-                fridgeDoor.style.transform = 'translateX(-150%)';
-                linkIcon.classList.remove("bi-door-open");
-                linkIcon.classList.add("bi-door-closed");
-                linkDesc.innerText = "Close";         
-            }
-            if(doorStatus === "bi-door-closed") {
-                fridgeDoor.style.transform = 'translateX(0%)';
-                linkIcon.classList.remove("bi-door-closed");
-                linkIcon.classList.add("bi-door-open");
-                linkDesc.innerText = "Open";
-            }
-
-            setFridge(allProductsInDB)
-        };
         
         // ADD NEW QTY TO DB
         if(action === 'add-new-qty') {
             allProductsInDB = []
 
-            let product = e.nativeEvent.path[1].childNodes[0].innerText;
-            let qty = parseInt(e.nativeEvent.path[1].childNodes[1].childNodes[1].innerText);  
-            let id = parseInt(e.nativeEvent.path[2].dataset.id);
+            let product = e.target.parentElement.firstChild.innerText;
+            let qty = parseInt(e.target.parentElement.childNodes[1].childNodes[1].innerText);  
+            let id = parseInt(e.target.parentElement.dataset.id);
 
             const data = {strIngredient: product, qty: qty, idIngredient: id};
             
@@ -169,15 +140,10 @@ function Fridge () {
                 updateData(data)
             };
 
-            editPanel.forEach(() => {
-                const addNewQtyBtn = e.nativeEvent.path[1].childNodes[2];
-                const closePanelBtn = e.nativeEvent.path[1].childNodes[3];
-
+            editPanels.forEach(() => {
                 addNewQtyBtn.style.display = 'none';
                 closePanelBtn.style.display = 'block';
             });
-
-
         }
 
         // CLOSE PANEL AND SET FRIDGE
@@ -185,66 +151,83 @@ function Fridge () {
 
             setFridge(allProductsInDB);
 
-            editPanel.forEach(panel => {
+            editPanels.forEach(panel => {
                 if(panel.dataset.id == selectedId) {
                     panel.style.transform = "translateX(120%)"
                 };
             });
-
         }
         
     };
+
+    const handleDoorClicks = () => {
+        const fridgeDoor = document.querySelector('.fridge-door'),
+        linkIcon = document.querySelector('.fridge-link > i'),
+        linkDesc = document.querySelector('.fridge-link > p'),
+        doorStatus = linkIcon.classList[1];
+
+        switch (doorStatus) {
+            case "bi-door-open":
+                fridgeDoor.style.transform = 'translateX(-150%)';
+                linkIcon.classList.remove("bi-door-open");
+                linkIcon.classList.add("bi-door-closed");
+                linkDesc.innerText = "Close";   
+                break;
+            case "bi-door-closed":
+                fridgeDoor.style.transform = 'translateX(0%)';
+                linkIcon.classList.remove("bi-door-closed");
+                linkIcon.classList.add("bi-door-open");
+                linkDesc.innerText = "Open";  
+                break;
+        }
+
+        setFridge(allProductsInDB)
+    }
 
     useEffect(() => {
 
     })
 
-    // let postMessage;
+    return (
+        <Fragment>
+        
+            <div className="page-title-container">
+                <h2 className="page-title"><i className="bi bi-door-closed ico-link"></i>- Fridge</h2>
+            </div>
 
-    // if(fridge.length == 0) {
-    //     postMessage = "- Your fridge is empty, go to the market!"
-    // } else {
-    //     postMessage = `- You have ${allProductsInDB.length} products in your fridge!`
-    // }
-
-        return (
-            <Fragment>
-                    {/* <div className="page-header"> */}
-                    <div className="page-title-container">
-                        <h2 className="page-title"><i className="bi bi-door-closed ico-link"></i>- Fridge</h2>
+            <div className="fridge-header-container">
+                <div className="small-title-container">
+                    <h2 className="small-title"><i className="bi bi-door-closed ico-link"></i>- Fridge</h2>
+                </div>
+                {/* MENU */}
+                <div className="fridge-menu">
+                    <div className="fridge-link" onClick={handleDoorClicks}>
+                        <i className="bi bi-door-open" data-action='open-fridge'></i>
+                        <p id="fridge-link-desc" data-action='open-fridge'>Open</p>
                     </div>
-
-                <div className="fridge-header-container">
-                    <div className="small-title-container">
-                        <h2 className="small-title"><i className="bi bi-door-closed ico-link"></i>- Fridge</h2>
+                    <Link to="/market" className="fridge-link link">
+                        <i className="bi bi-shop"></i>
+                        <p id="fridge-link-desc">Market</p> 
+                    </Link>
+                </div>
+            </div>
+                
+            <div className="fridge-content">
+                {/* DOOR */}
+                <div className="fridge-door">
+                    <div className="fridge-temperature">
+                        <p>4°C<i className="bi bi-thermometer-low"></i></p>
                     </div>
-                    <div className="fridge-menu">
-                        <div className="fridge-link" onClick={handleFridgeClicks}>
-                            <i className="bi bi-door-open" data-action='open-fridge'></i>
-                            <p id="fridge-link-desc" data-action='open-fridge'>Open</p>
-                        </div>
-                        <Link to="/market" className="fridge-link link">
-                            <i className="bi bi-shop"></i>
-                            <p id="fridge-link-desc">Market</p> 
-                        </Link>
+                    <div className="fridge-post">
+                        <p>- Open and choice what to eat!</p>
                     </div>
                 </div>
-                    
-                    {/* </div> */}
-                    
-                    <div className="fridge-content">
-                        <div className="fridge-door">
-                            <div className="fridge-temperature">
-                                <p>4°C<i className="bi bi-thermometer-low"></i></p>
-                            </div>
-                            <div className="fridge-post">
-                                <p>- Open and choice what to eat!</p>
-                            </div>
-                        </div>
-                        <FridgeContain fridge={fridge} onClick={handleFridgeClicks}/>
-                    </div>
-            </Fragment>
-        )
+                {/* CONTAIN */}
+                <FridgeContain fridge={fridge} onClick={handleFridgeClicks}/>
+            </div>
+            
+        </Fragment>
+    )
 };
 
 export default Fridge;

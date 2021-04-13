@@ -18,7 +18,6 @@
     clip-path: polygon(2% 0%, 0% 100%, 100% 100%, 98% 0);
     position: relative;
 }
-
 .market-item:nth-child(odd)::after,
 .market-item:nth-child(odd)::before,
 .market-item:nth-child(even)::before,
@@ -82,14 +81,13 @@
     .item-qty {
         font-size: .9em;
     }
-}
+};
 
 @media screen and (min-width: 576px) {
     .market-item {
         width: 75%;
     }
-
-}
+};
 
 @media screen and (min-width: 768px) {
     .market-item {
@@ -98,10 +96,10 @@
     .qty {
         margin: 0 10px;
     } 
-}
+};
 
 @media screen and (min-width: 1024px) {
     .item-qty {
         font-size: 1em;
     } 
-}
+};

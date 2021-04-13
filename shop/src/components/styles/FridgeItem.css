@@ -1,6 +1,8 @@
+/* FRIDGE ITEM */
 .fridge-item-container {
     background: white;
     width: 100%;
+    height: 50px;
     border-bottom: 1px solid #ccc;
     display: grid;
     grid-template-columns: 20% 60% auto;
@@ -32,12 +34,6 @@
     font-size: .8em;
 }
 
-.nutrition-info {
-    display: none;
-    font-size: .75em;
-    margin: 0;
-}
-
 .change-item {
     display: flex;
     justify-content: space-around;
@@ -49,6 +45,8 @@
     position: absolute;
     z-index: -1;
 }
+
+/* EDIT PANEL */
 
 .edit-panel {
     color: white;
@@ -76,10 +74,6 @@
     display: none;
 }
 
-@media screen and (max-width: 425px) {
-    
-} 
-
 @media screen and (min-width: 768px) {
     .item-info > h5 {
         font-size: .9em;
@@ -90,7 +84,6 @@
     .food-pic {
         height: 40px;
     }
-
 }
 
 @media screen and (min-width: 1024px) {

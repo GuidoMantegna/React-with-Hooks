@@ -4,7 +4,7 @@
 }
 
 form {
-    background-image: url('/src/images/side-background.jpg');
+    background-image: url('/src/images/form-background.jpg');
     background-size: cover;
     width: 100%;
     padding: 15px;
@@ -54,9 +54,6 @@ fieldset {
     form {
         width: 80%;
     }
-}
-@media screen and (min-width: 768px) {
-    
 }
 @media screen and (min-width: 992px) {
     form {

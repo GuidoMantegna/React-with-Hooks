@@ -26,10 +26,11 @@
 
 .tips-content {
     width: 100%;
-    height: 70%;
+    height: 90%;
     display: flex;
     justify-content: center;
     position: relative;
+    overflow-y: scroll;
 }
 
 .tips-search-results {
@@ -64,8 +65,7 @@
 .tip-card {
     margin-top: 20px;
     width: 80%;
-    overflow-y: scroll;
-
+    height: 85%;
 }
 
 .tip-card-body {
@@ -110,8 +110,8 @@
     .tips-header-container {
         display: block;
     }
-    .tip-card-body {
-        min-height: 250px;
+    form {
+        margin-top: 10px;
     }
 }
 
