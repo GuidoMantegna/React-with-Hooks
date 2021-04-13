@@ -1,8 +1,8 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import './styles/Contact.css';
 
 function Contact ({ history }) {
-    
+    const [values, setValues] = useState({ name: "", last: "", mail: "" });
     const inputs = Array.from(document.querySelectorAll('.form-input'));
     let formComplete = false;
     
@@ -23,20 +23,27 @@ function Contact ({ history }) {
     };
 
     const handleChange = e => {
-            const btn = document.querySelector('.contact-btn');
             e.target.style.background = 'rgba(150, 150, 150, .1)';
             e.target.style.fontWeight = '100';
 
-            formComplete = inputs.every(input => input.value !== "");
-
-            if(formComplete) {
-                btn.classList.remove('btn-danger');
-                btn.classList.add('btn-success');
-            } else {
-                btn.classList.add('btn-danger');
-                btn.classList.remove('btn-success');
-            }
+            setValues({
+                ...values,
+                [e.target.name]: e.target.value
+            });               
     };
+
+    useEffect(()=>{
+        const btn = document.querySelector('.contact-btn');
+
+        if(values.name !== "" && values.last !== "" && values.mail !== "") {
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-success');
+            formComplete = true;
+        } else {
+            btn.classList.add('btn-danger');
+            btn.classList.remove('btn-success');
+        }
+    })
 
     return (
         <Fragment>
@@ -53,15 +60,15 @@ function Contact ({ history }) {
                 <fieldset>
                     <div className="first-name form-item">
                         <label className="lead" htmlFor="firstName">FIRST NAME</label>
-                        <input className="form-input" onChange={handleChange} type="text" id="firstName" placeholder="enter your first name"/>
+                        <input className="form-input" onChange={handleChange} type="text" placeholder="enter your first name" name="name" value={values.name}/>
                     </div>
                     <div className="last-name form-item">
                         <label className="lead" htmlFor="lastName">LAST NAME</label>
-                        <input className="form-input" onChange={handleChange} type="text" id="lastName" placeholder="enter your last name"/>
+                        <input className="form-input" onChange={handleChange} type="text" placeholder="enter your last name" name="last" value={values.last}/>
                     </div>
                     <div className="e-mail form-item">
                         <label className="lead" htmlFor="email">e-Mail</label>
-                        <input className="form-input" onChange={handleChange} type="email" id="email" placeholder="example@example.com"/>
+                        <input className="form-input" onChange={handleChange} type="email" placeholder="example@example.com" name="mail" value={values.mail}/>
                     </div>
                     <div className="offers form-item">
                         <label className="lead" htmlFor="offers">Which offers do you prefer?</label>
