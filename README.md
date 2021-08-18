@@ -1,4 +1,4 @@
-# React with Hooks
+# Food Market
 🌎 [FullFridge.com](https://react-with-hooks.vercel.app/home)
 
 🛒 This food market app was builden with React.js using Hooks. 
