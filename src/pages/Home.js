@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import './styles/Home.css';
+import { Grid, GridItem } from '@chakra-ui/react'
 import HomeCard from '../components/HomeCard';
 import FridgeBack from '../images/fridge-background.jpg';
 import MarketBack from '../images/market-background.jpg';
@@ -19,7 +20,7 @@ function Home () {
                 </div>
             </div>
 
-            <div className="home-main-container">
+            {/* <div className="home-main-container">
                 <HomeCard 
                     cardTitle='Look into your fridge'
                     cardText='Check your fridge before the market get closed.'
@@ -48,7 +49,45 @@ function Home () {
                     cardBack={ContactBack}
                     linkTo="/contact"
                     />
-            </div>
+            </div> */}
+            <Grid>
+                <GridItem>
+                    <HomeCard 
+                        cardTitle='Look into your fridge'
+                        cardText='Check your fridge before the market get closed.'
+                        backgroundColor="rgba(210, 105, 30, .85)"
+                        cardBack={FridgeBack}
+                        linkTo='/fridge'
+                        />
+                </GridItem>
+                <GridItem>
+                    <HomeCard 
+                        cardTitle='Visit the market!'
+                        cardText='Go to the market and choice what you want to eat.'
+                        backgroundColor="rgba(30, 210, 105, 0.75)"
+                        cardBack={MarketBack}
+                        linkTo="/market"
+                        />
+                </GridItem>
+                <GridItem>
+                    <HomeCard 
+                        cardTitle='Get best tips'
+                        cardText='Learn about more interesting food facts'
+                        backgroundColor="rgba(235, 192, 201, 0.75)"
+                        cardBack={TipsBack}
+                        linkTo="/tips"
+                        />
+                </GridItem>
+                <GridItem>
+                    <HomeCard 
+                        cardTitle='Join us!'
+                        cardText='Suscribe to our newsletter and be the first to get the info'
+                        backgroundColor="rgba(255, 252, 69, 0.85)"
+                        cardBack={ContactBack}
+                        linkTo="/contact"
+                        />
+                </GridItem>
+            </Grid>
         </Fragment>   
     );
 };

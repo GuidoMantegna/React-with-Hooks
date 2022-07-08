@@ -4,11 +4,15 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from './theme';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ChakraProvider theme={theme}>
+    {/* <React.StrictMode> */}
+      <App />
+    {/* </React.StrictMode> */}
+  </ChakraProvider>,
   document.getElementById('root')
 );
 
